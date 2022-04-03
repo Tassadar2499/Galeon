@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "TorrentTest": {
+      "commandName": "Project"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "environmentVariables": {},
+      "distributionName": ""
+    },
+    "GaleonServer.Api": {
+      "commandName": "Executable",
+      "executablePath": "C:\\VsProjects\\Galeon\\GaleonServer.Api\\bin\\Debug\\net6.0\\GaleonServer.Api.exe",
+      "workingDirectory": "C:\\VsProjects\\Galeon\\GaleonServer.Api\\bin\\Debug"
+    }
+  }
+}

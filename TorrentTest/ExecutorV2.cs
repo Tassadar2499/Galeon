@@ -12,35 +12,29 @@ namespace TorrentTest
 
 			var settingBuilder = new EngineSettingsBuilder
 			{
-				// Allow the engine to automatically forward ports using upnp/nat-pmp (if a compatible router is available)
 				AllowPortForwarding = true,
-
-				// Automatically save a cache of the DHT table when all torrents are stopped.
 				AutoSaveLoadDhtCache = true,
-
-				// Automatically save 'FastResume' data when TorrentManager.StopAsync is invoked, automatically load it
-				// before hash checking the torrent. Fast Resume data will be loaded as part of 'engine.AddAsync' if
-				// torrent metadata is available. Otherwise, if a magnetlink is used to download a torrent, fast resume
-				// data will be loaded after the metadata has been downloaded. 
 				AutoSaveLoadFastResume = true,
-
-				// If a MagnetLink is used to download a torrent, the engine will try to load a copy of the metadata
-				// it's cache directory. Otherwise the metadata will be downloaded and stored in the cache directory
-				// so it can be reloaded later.
 				AutoSaveLoadMagnetLinkMetadata = true,
-
-				// Use a fixed port to accept incoming connections from other peers.
 				ListenPort = 55123,
-
-				// Use a random port for DHT communications.
 				DhtPort = 55123,
+				FastResumeMode = FastResumeMode.BestEffort
 			};
+
+			var engineSetting = settingBuilder.ToSettings();
 
 			using var engine = new ClientEngine(settingBuilder.ToSettings());
 			var magnet = MagnetLink.Parse(magnetLink);
-			var manager = await engine.AddAsync(magnet, saveDirectory);
+
+			var torrentSettingBuilder = new TorrentSettingsBuilder
+			{
+				AllowInitialSeeding = true,
+				UploadSlots = 0
+			};
+
+			var manager = await engine.AddAsync(magnet, saveDirectory, torrentSettingBuilder.ToSettings());
 			await engine.StartAllAsync();
-			while (manager.State != TorrentState.Stopped)
+			while (manager.State is not (TorrentState.Stopped or TorrentState.Seeding))
 			{
 				if (manager.State == TorrentState.Downloading)
 				{

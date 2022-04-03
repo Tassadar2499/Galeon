@@ -1,0 +1,18 @@
+services:
+  postgres:
+    container_name: postgres_container
+    image: postgres
+    restart: always
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: admin
+    volumes:
+        - C:\Kek\distr\docker\volumes\storage\postgresql:/data/postgres
+    ports:
+        - 5432:5432
+    deploy:
+        resources:
+            limits:
+                memory: 2048M
+            reservations:
+                memory: 2048M
