@@ -9,8 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GaleonServer.Core\GaleonServer.Core.csproj" />
+    <ProjectReference Include="..\GaleonServer.Infrastructure\GaleonServer.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

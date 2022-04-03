@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using SuRGeoNix.BitSwarmLib;
-using TorrentTest;
 
 namespace TorrentTest
 {
@@ -14,7 +13,6 @@ namespace TorrentTest
 			_bitSwarm = new BitSwarm();
 			_sessionFinished = false;
 		}
-
 
 		public async Task Execute()
 		{
@@ -39,11 +37,11 @@ namespace TorrentTest
 
 			// Receives torrent data (on torrent file/session will fire directly, on magnetlink/hash will fire on metadata received - notify user with torrent detail and optionally choose which files to include)
 			_bitSwarm.MetadataReceived += BitSwarm_MetadataReceived;     // e.Torrent
-																		// Receives statistics (refresh every 2 seconds - notify user with the current connections/bytes/speed of downloading)
+																		 // Receives statistics (refresh every 2 seconds - notify user with the current connections/bytes/speed of downloading)
 			_bitSwarm.StatsUpdated += BitSwarm_StatsUpdated;     // e.Stats
-																// Notifies with the new status (notify user with 0: Finished, 1: Stopped, 2: Error)
+																 // Notifies with the new status (notify user with 0: Finished, 1: Stopped, 2: Error)
 			_bitSwarm.StatusChanged += BitSwarm_StatusChanged;       // e.Status
-																	// Notifies that is going to stop (user can prevent it from finishing, by including other previously excluded files)
+																	 // Notifies that is going to stop (user can prevent it from finishing, by including other previously excluded files)
 			_bitSwarm.OnFinishing += BitSwarm_OnFinishing;       // e.Cancel
 
 			_bitSwarm.Open(magnetLink);
@@ -54,7 +52,7 @@ namespace TorrentTest
 			{
 				await Task.Delay(1000);
 			}
-	
+
 			_bitSwarm?.Dispose();
 		}
 
