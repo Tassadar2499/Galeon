@@ -18,17 +18,17 @@ namespace GaleonServer.Api.Controllers
 		}
 
 		[HttpGet("all")]
-		public async Task<IReadOnlyCollection<GameDto>> GetAll()
+		public async Task<IReadOnlyCollection<GameDto>> GetAll(CancellationToken cancellationToken)
 		{
 			var query = new GetAllGamesQuery();
 
-			return await _mediator.Send(query);
+			return await _mediator.Send(query, cancellationToken);
 		}
 
 		[HttpPost("add")]
-		public async Task Add([FromBody] AddGameCommand command)
+		public async Task Add([FromBody] AddGameCommand command, CancellationToken cancellationToken)
 		{
-			_ = await _mediator.Send(command);
+			_ = await _mediator.Send(command, cancellationToken);
 		}
 	}
 }

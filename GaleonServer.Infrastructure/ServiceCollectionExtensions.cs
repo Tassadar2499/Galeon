@@ -17,7 +17,12 @@ namespace GaleonServer.Infrastructure
 				.AddEntityFrameworkNpgsql()
 				.AddDbContext<GaleonContext>(opt => opt.UseNpgsql(connectionString));
 
+			services
+				.AddEntityFrameworkNpgsql()
+				.AddDbContext<GaleonReadonlyContext>(opt => opt.UseNpgsql(connectionString));
+
 			services.AddTransient<IGameGateway, GameGateway>();
+			services.AddTransient<IGameReadonlyGateway, GameReadonlyGateway>();
 
 			return services;
 		}

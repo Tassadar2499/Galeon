@@ -10,9 +10,9 @@ namespace GaleonServer.Core.Queries
 
 	public class GetAllGamesQueryHandler : IRequestHandler<GetAllGamesQuery, IReadOnlyCollection<GameDto>>
 	{
-		private readonly IGameGateway _gameGateway;
+		private readonly IGameReadonlyGateway _gameGateway;
 
-		public GetAllGamesQueryHandler(IGameGateway gameGateway)
+		public GetAllGamesQueryHandler(IGameReadonlyGateway gameGateway)
 		{
 			_gameGateway = gameGateway;
 		}

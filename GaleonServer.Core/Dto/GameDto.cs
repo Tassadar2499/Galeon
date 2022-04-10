@@ -1,7 +1,7 @@
 ﻿namespace GaleonServer.Core.Dto
 {
-	public class GameDto
+	public record GameDto
 	{
-		public string Name { get; set; }
+		public string Name { get; init; } = null!;
 	}
 }

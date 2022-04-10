@@ -5,7 +5,7 @@ namespace GaleonServer.Core.Commands
 {
 	public class AddGameCommand : IRequest
 	{
-		public string Name { get; set; }
+		public string Name { get; set; } = null!;
 	}
 
 	public class AddGameCommandHandler : IRequestHandler<AddGameCommand>
@@ -19,7 +19,7 @@ namespace GaleonServer.Core.Commands
 
 		public async Task<Unit> Handle(AddGameCommand request, CancellationToken cancellationToken)
 		{
-			await _gameGateway.Add(request.Name);
+			await _gameGateway.Add(request.Name, cancellationToken);
 
 			return new Unit();
 		}

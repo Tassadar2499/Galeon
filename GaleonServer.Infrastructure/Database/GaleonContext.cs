@@ -10,8 +10,11 @@ namespace GaleonServer.Infrastructure.Database
 		public DbSet<MagnetLink> MagnetLinks { get; set; } = null!;
 		public DbSet<UserToGame> UsersToGames { get; set; } = null!;
 
-		public GaleonContext(DbContextOptions<GaleonContext> options)
-			: base(options)
+		public GaleonContext(DbContextOptions<GaleonContext> options): this(options as DbContextOptions)
+		{
+		}
+
+		protected GaleonContext(DbContextOptions options) : base(options)
 		{
 			Database.EnsureCreated();
 		}
