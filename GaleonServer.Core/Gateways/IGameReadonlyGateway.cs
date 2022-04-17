@@ -4,6 +4,6 @@ namespace GaleonServer.Core.Gateways
 {
 	public interface IGameReadonlyGateway
 	{
-		Task<IReadOnlyCollection<GameDto>> GetAll(CancellationToken cancellationToken);
+		IAsyncEnumerable<GameDto> GetAll(CancellationToken cancellationToken);
 	}
 }

@@ -3,6 +3,7 @@ using GaleonServer.Core.Dto;
 using GaleonServer.Core.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 
 namespace GaleonServer.Api.Controllers
 {
@@ -18,11 +19,14 @@ namespace GaleonServer.Api.Controllers
 		}
 
 		[HttpGet("all")]
-		public async Task<IReadOnlyCollection<GameDto>> GetAll(CancellationToken cancellationToken)
+		public async IAsyncEnumerable<GameDto> GetAll([EnumeratorCancellation] CancellationToken cancellationToken)
 		{
 			var query = new GetAllGamesQuery();
 
-			return await _mediator.Send(query, cancellationToken);
+			var games = _mediator.CreateStream(query, cancellationToken);
+
+			await foreach (var game in games.WithCancellation(cancellationToken))
+				yield return game;
 		}
 
 		[HttpPost("add")]

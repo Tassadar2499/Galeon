@@ -4,11 +4,11 @@ using MediatR;
 
 namespace GaleonServer.Core.Queries
 {
-	public class GetAllGamesQuery : IRequest<IReadOnlyCollection<GameDto>>
+	public class GetAllGamesQuery : IStreamRequest<GameDto>
 	{
 	}
 
-	public class GetAllGamesQueryHandler : IRequestHandler<GetAllGamesQuery, IReadOnlyCollection<GameDto>>
+	public class GetAllGamesQueryHandler : IStreamRequestHandler<GetAllGamesQuery, GameDto>
 	{
 		private readonly IGameReadonlyGateway _gameGateway;
 
@@ -17,9 +17,9 @@ namespace GaleonServer.Core.Queries
 			_gameGateway = gameGateway;
 		}
 
-		public async Task<IReadOnlyCollection<GameDto>> Handle(GetAllGamesQuery request, CancellationToken cancellationToken)
+		public IAsyncEnumerable<GameDto> Handle(GetAllGamesQuery request, CancellationToken cancellationToken)
 		{
-			return await _gameGateway.GetAll(cancellationToken);
+			return _gameGateway.GetAll(cancellationToken);
 		}
 	}
 }
