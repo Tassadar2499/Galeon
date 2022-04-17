@@ -1,7 +1,7 @@
 ﻿namespace GaleonServer.Core.Dto
 {
-	public record GameDto
+	public readonly struct GameDto
 	{
-		public string Name { get; init; } = null!;
+		public string Name { get; init; }
 	}
 }

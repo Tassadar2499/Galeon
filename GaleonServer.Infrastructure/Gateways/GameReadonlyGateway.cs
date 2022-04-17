@@ -17,7 +17,7 @@ namespace GaleonServer.Infrastructure.Gateways
 		public async Task<IReadOnlyCollection<GameDto>> GetAll(CancellationToken cancellationToken)
 		{
 			return await _context.Games
-				.Select(x => new GameDto { Name = x.Name })
+				.Select(x => new GameDto() { Name = x.Name })
 				.ToArrayAsync(cancellationToken);
 		}
 	}

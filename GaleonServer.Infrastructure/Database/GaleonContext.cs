@@ -23,5 +23,12 @@ namespace GaleonServer.Infrastructure.Database
 		{
 			modelBuilder.ApplyConfigurationsFromAssembly(typeof(GaleonContext).Assembly);
 		}
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			optionsBuilder
+				.UseNpgsql()
+				.UseSnakeCaseNamingConvention();
+		}
 	}
 }
