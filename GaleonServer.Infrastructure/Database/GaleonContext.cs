@@ -1,11 +1,11 @@
 ﻿using GaleonServer.Core.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace GaleonServer.Infrastructure.Database
 {
-	public class GaleonContext : DbContext
+	public class GaleonContext : IdentityDbContext<User>
 	{
-		public DbSet<User> Users { get; set; } = null!;
 		public DbSet<Game> Games { get; set; } = null!;
 		public DbSet<MagnetLink> MagnetLinks { get; set; } = null!;
 		public DbSet<UserToGame> UsersToGames { get; set; } = null!;

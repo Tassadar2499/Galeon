@@ -1,7 +1,7 @@
 ﻿namespace GaleonServer.Core.Models
 {
-	public class EntityBase<T>
+	public interface IEntityBase<T>
 	{
-		public T Id { get; set; } = default!;
+		public T Id { get; set; }
 	}
 }

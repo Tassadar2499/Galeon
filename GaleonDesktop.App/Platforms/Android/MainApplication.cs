@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace GaleonDesktop.App
+namespace GaleonDesktop.App.Platforms.Android
 {
 	[Application]
 	public class MainApplication : MauiApplication
