@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaleonServer.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonDesktop.App", "GaleonDesktop.App\GaleonDesktop.App.csproj", "{4E5CDF91-5603-4093-B95F-C64FDC734CFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.Models", "GaleonServer.Models\GaleonServer.Models.csproj", "{E70C5D93-50CB-4654-B362-38543312DBAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.Interfaces", "GaleonServer.Interfaces\GaleonServer.Interfaces.csproj", "{07861834-7CA6-4D3E-B76B-A439FCAA72EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,14 @@ Global
 		{4E5CDF91-5603-4093-B95F-C64FDC734CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E5CDF91-5603-4093-B95F-C64FDC734CFF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E5CDF91-5603-4093-B95F-C64FDC734CFF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E70C5D93-50CB-4654-B362-38543312DBAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E70C5D93-50CB-4654-B362-38543312DBAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E70C5D93-50CB-4654-B362-38543312DBAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E70C5D93-50CB-4654-B362-38543312DBAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07861834-7CA6-4D3E-B76B-A439FCAA72EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07861834-7CA6-4D3E-B76B-A439FCAA72EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07861834-7CA6-4D3E-B76B-A439FCAA72EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07861834-7CA6-4D3E-B76B-A439FCAA72EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

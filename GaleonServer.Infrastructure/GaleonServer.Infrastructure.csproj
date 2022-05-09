@@ -30,6 +30,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GaleonServer.Core\GaleonServer.Core.csproj" />
+    <ProjectReference Include="..\GaleonServer.Interfaces\GaleonServer.Interfaces.csproj" />
+    <ProjectReference Include="..\GaleonServer.Models\GaleonServer.Models.csproj" />
   </ItemGroup>
 
 </Project>

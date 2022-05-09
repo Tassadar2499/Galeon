@@ -1,13 +1,8 @@
 ﻿using GaleonServer.Core.Gateways;
 using GaleonServer.Core.Models;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using GaleonServer.Infrastructure.Entities.Options;
@@ -18,7 +13,7 @@ namespace GaleonServer.Infrastructure.Gateways
 	{
 		private readonly string _tokenKey;
 
-		public JwtTokenGateway(IOptionsSnapshot<IdentityOptions> options)
+		public JwtTokenGateway(IOptions<IdentityOptions> options)
 		{
 			_tokenKey = options.Value.TokenKey;
 		}

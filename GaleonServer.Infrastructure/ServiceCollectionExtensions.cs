@@ -32,9 +32,11 @@ namespace GaleonServer.Infrastructure
 			var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
 			identityBuilder.AddEntityFrameworkStores<GaleonContext>();
 			identityBuilder.AddSignInManager<SignInManager<User>>();
-
-			//TODO: Отрефакторить
-			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Identity:TokenKey"]));
+			
+			var tokenKeyParamName = configuration["Identity:TokenKey"];
+			var tokenKeyParamBytes = Encoding.UTF8.GetBytes(tokenKeyParamName);
+			var key = new SymmetricSecurityKey(tokenKeyParamBytes);
+			
 			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
 			opt =>
 			{

@@ -8,6 +8,7 @@ namespace GaleonDesktop.App
 		public static MauiApp CreateMauiApp()
 		{
 			var builder = MauiApp.CreateBuilder();
+			
 			builder
 				.RegisterBlazorMauiWebView()
 				.UseMauiApp<App>()

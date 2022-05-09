@@ -1,6 +1,6 @@
-﻿using GaleonServer.Core.Dto;
-using GaleonServer.Core.Gateways;
+﻿using GaleonServer.Core.Gateways;
 using GaleonServer.Infrastructure.Database;
+using GaleonServer.Models.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace GaleonServer.Infrastructure.Gateways
@@ -14,10 +14,10 @@ namespace GaleonServer.Infrastructure.Gateways
 			_context = context;
 		}
 
-		public IAsyncEnumerable<GameDto> GetAll(CancellationToken cancellationToken)
+		public IAsyncEnumerable<GameResponse> GetAll(CancellationToken cancellationToken)
 		{
 			return _context.Games
-				.Select(x => new GameDto() { Name = x.Name })
+				.Select(x => new GameResponse() { Name = x.Name })
 				.AsAsyncEnumerable();
 		}
 	}
