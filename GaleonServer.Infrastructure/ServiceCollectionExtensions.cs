@@ -4,12 +4,14 @@ using GaleonServer.Core.Models;
 using GaleonServer.Infrastructure.Database;
 using GaleonServer.Infrastructure.Gateways;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using GaleonServer.Models.Options;
+using Microsoft.AspNetCore.Identity;
+using IdentityOptions = GaleonServer.Models.Options.IdentityOptions;
 
 namespace GaleonServer.Infrastructure
 {
@@ -27,6 +29,7 @@ namespace GaleonServer.Infrastructure
 		private static void AddIdentity(this IServiceCollection services, IConfiguration configuration)
 		{
 			services.ConfigureFromSection<IdentityOptions>(configuration, "Identity");
+			services.ConfigureFromSection<EmailGatewayOptions>(configuration, "EmailService");
 
 			var builder = services.AddIdentityCore<User>();
 			var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);

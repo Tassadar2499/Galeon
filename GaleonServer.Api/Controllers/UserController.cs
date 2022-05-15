@@ -1,5 +1,6 @@
 using System.Net;
 using GaleonServer.Core.Exceptions;
+using GaleonServer.Models.Commands;
 using GaleonServer.Models.Queries;
 using GaleonServer.Models.Responses;
 using MediatR;
@@ -40,5 +41,21 @@ public class UserController : ControllerBase
         }
 
         return Problem();
+    }
+
+    [HttpPost("register")]
+    public async Task<ActionResult> Register(RegisterCommand registerCommand)
+    {
+        try
+        {
+            await _mediator.Send(registerCommand);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            throw;
+        }
+
+        return Ok();
     }
 }
