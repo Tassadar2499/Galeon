@@ -15,11 +15,9 @@ public class EmailGateway : IEmailGateway
     private const int Port = 465;
 
     private readonly EmailGatewayOptions _options;
-    private readonly SmtpClient _smtpClient;
 
-    public EmailGateway(IOptions<EmailGatewayOptions> options, SmtpClient smtpClient)
+    public EmailGateway(IOptions<EmailGatewayOptions> options)
     {
-        _smtpClient = smtpClient;
         _options = options.Value;
     }
 
@@ -27,10 +25,11 @@ public class EmailGateway : IEmailGateway
     {
         var emailMessage = CreateMimeMessage(sendEmailDto, _options.Email);
 
-        await _smtpClient.ConnectAsync(MainAddress, Port, true, cancellationToken);
-        await _smtpClient.AuthenticateAsync(_options.Email, _options.Password, cancellationToken);
-        await _smtpClient.SendAsync(emailMessage, cancellationToken);
-        await _smtpClient.DisconnectAsync(true, cancellationToken);
+        var smtpClient = new SmtpClient();
+        await smtpClient.ConnectAsync(MainAddress, Port, true, cancellationToken);
+        await smtpClient.AuthenticateAsync(_options.Email, _options.Password, cancellationToken);
+        await smtpClient.SendAsync(emailMessage, cancellationToken);
+        await smtpClient.DisconnectAsync(true, cancellationToken);
     }
 
     private static MimeMessage CreateMimeMessage(SendEmailDto sendEmailDto, string adminEmail)

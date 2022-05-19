@@ -1,19 +1,20 @@
-﻿using GaleonServer.Core;
+﻿using System.Text;
+using GaleonServer.Core;
 using GaleonServer.Core.Gateways;
 using GaleonServer.Core.Models;
 using GaleonServer.Infrastructure.Database;
 using GaleonServer.Infrastructure.Gateways;
+using GaleonServer.Interfaces.Gateways;
+using GaleonServer.Models.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using GaleonServer.Models.Options;
-using Microsoft.AspNetCore.Identity;
 using IdentityOptions = GaleonServer.Models.Options.IdentityOptions;
 
-namespace GaleonServer.Infrastructure
+namespace GaleonServer.Infrastructure.ServicesInitialize
 {
 	public static class ServiceCollectionExtensions
 	{
@@ -68,9 +69,10 @@ namespace GaleonServer.Infrastructure
 
 		private static void AddGateways(this IServiceCollection services)
 		{
-			services.AddScoped<IJwtTokenGateway, JwtTokenGateway>();
+			services.AddTransient<IJwtTokenGateway, JwtTokenGateway>();
 			services.AddTransient<IGameGateway, GameGateway>();
 			services.AddTransient<IGameReadonlyGateway, GameReadonlyGateway>();
+			services.AddTransient<IEmailGateway, EmailGateway>();
 		}
 	}
 }

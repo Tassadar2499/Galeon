@@ -1,5 +1,6 @@
 using GaleonServer.Core;
 using GaleonServer.Infrastructure;
+using GaleonServer.Infrastructure.ServicesInitialize;
 
 var builder = WebApplication.CreateBuilder(args);
 
