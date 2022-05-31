@@ -5,7 +5,7 @@ using MediatR;
 
 namespace GaleonServer.Models.Commands;
 
-public class RegisterCommand : IRequest<RegisterResponse>
+public class RegisterCommand : IRequest<SimpleResponse>
 {
     public string Email { get; init; } = null!;
     public string Password { get; init; } = null!;

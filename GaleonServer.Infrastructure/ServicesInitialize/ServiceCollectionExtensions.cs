@@ -73,6 +73,7 @@ namespace GaleonServer.Infrastructure.ServicesInitialize
 			services.AddTransient<IGameGateway, GameGateway>();
 			services.AddTransient<IGameReadonlyGateway, GameReadonlyGateway>();
 			services.AddTransient<IEmailGateway, EmailGateway>();
+			services.AddTransient<IUserGateway, UserGateway>();
 		}
 	}
 }

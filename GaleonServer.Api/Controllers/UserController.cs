@@ -13,12 +13,10 @@ namespace GaleonServer.Api.Controllers;
 [Route("api/[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly ILogger<UserController> _logger;
     private readonly IMediator _mediator;
 
-    public UserController(ILogger<UserController> logger, IMediator mediator)
+    public UserController(IMediator mediator)
     {
-        _logger = logger;
         _mediator = mediator;
     }
 
@@ -40,18 +38,17 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<RegisterResponse>> Register(RegisterCommand registerCommand)
+    public async Task<ActionResult<SimpleResponse>> Register(RegisterCommand command)
     {
-        registerCommand.SetCreateCallbackUrl(CreateConfirmEmailCallbackUrl);
+        command.SetCreateCallbackUrl(CreateConfirmEmailCallbackUrl);
         
-        return await _mediator.Send(registerCommand);
+        return await _mediator.Send(command);
     }
     
     [HttpGet]
-    public async Task<IActionResult> ConfirmEmail()
+    public async Task<ActionResult<SimpleResponse>> ConfirmEmail(ConfirmEmailQuery query)
     {
-        await Task.Yield();
-        throw new NotImplementedException();
+        return await _mediator.Send(query);
     }
     
     private string? CreateConfirmEmailCallbackUrl(UserCallbackUrlDto userCallbackUrlDto) => CreateCallbackUrl(userCallbackUrlDto, nameof(ConfirmEmail));

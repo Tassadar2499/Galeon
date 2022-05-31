@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace GaleonServer.Core.Commands;
 
-public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterResponse>
+public class RegisterCommandHandler : IRequestHandler<RegisterCommand, SimpleResponse>
 {
     private readonly IEmailGateway _emailGateway;
     private readonly UserManager<User> _userManager;
@@ -19,7 +19,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterR
         _userManager = userManager;
     }
 
-    public async Task<RegisterResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
+    public async Task<SimpleResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
         var createCallbackUrl = request.CreateCallbackUrl;
         if (createCallbackUrl is null)
@@ -29,18 +29,14 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterR
         var userExist = await _userManager.FindByEmailAsync(email);
 
         if (userExist is not null)
-            return CreateResponse("Данный пользователь уже зарегистрирован");
+            return SimpleResponse.CreateError("Данный пользователь уже зарегистрирован");
         
         var user = new User { Email = email, UserName = email };
 
         var result = await _userManager.CreateAsync(user, request.Password);
 
         if (result.Succeeded is false)
-        {
-            var errorsStr = string.Join(Environment.NewLine, result.Errors.Select(z => z.Description));
-
-            return CreateResponse(errorsStr);
-        }
+            return SimpleResponse.CreateError(result.Errors.Select(z => z.Description));
 
         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
@@ -58,14 +54,6 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterR
 
         await _emailGateway.SendEmail(emailDto, cancellationToken);
 
-        return CreateResponse("Для завершения регистрации проверьте электронную почту и перейдите по ссылке, указанной в письме");
-    }
-
-    private static RegisterResponse CreateResponse(string info)
-    {
-        return new()
-        {
-            Info = info
-        };
+        return SimpleResponse.CreateSucceed();
     }
 }
