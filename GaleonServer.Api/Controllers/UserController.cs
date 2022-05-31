@@ -1,6 +1,7 @@
 using System.Net;
 using GaleonServer.Core.Exceptions;
 using GaleonServer.Models.Commands;
+using GaleonServer.Models.Dto;
 using GaleonServer.Models.Queries;
 using GaleonServer.Models.Responses;
 using MediatR;
@@ -34,28 +35,32 @@ public class UserController : ControllerBase
             if (ex.StatusCode is HttpStatusCode.Unauthorized)
                 return Unauthorized();
         }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex.ToString());
-            throw;
-        }
 
         return Problem();
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult> Register(RegisterCommand registerCommand)
+    public async Task<ActionResult<RegisterResponse>> Register(RegisterCommand registerCommand)
     {
-        try
-        {
-            await _mediator.Send(registerCommand);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex.ToString());
-            throw;
-        }
+        registerCommand.SetCreateCallbackUrl(CreateConfirmEmailCallbackUrl);
+        
+        return await _mediator.Send(registerCommand);
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> ConfirmEmail()
+    {
+        await Task.Yield();
+        throw new NotImplementedException();
+    }
+    
+    private string? CreateConfirmEmailCallbackUrl(UserCallbackUrlDto userCallbackUrlDto) => CreateCallbackUrl(userCallbackUrlDto, nameof(ConfirmEmail));
 
-        return Ok();
+    private string? CreateCallbackUrl(UserCallbackUrlDto userCallbackUrlDto, string action)
+    {
+        var urlValues = new { userCallbackUrlDto.UserId, userCallbackUrlDto.Code };
+        var protocol = HttpContext.Request.Scheme;
+
+        return Url.Action(action, "User", urlValues, protocol);
     }
 }
