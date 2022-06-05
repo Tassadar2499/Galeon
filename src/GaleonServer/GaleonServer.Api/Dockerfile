@@ -7,16 +7,17 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["GaleonServer.Api/GaleonServer.Api.csproj", "GaleonServer.Api/"]
-RUN dotnet restore "GaleonServer.Api/GaleonServer.Api.csproj"
+COPY GaleonServer.Api.csproj GaleonServer.Api.csproj
+RUN dotnet restore GaleonServer.Api.csproj
+
 COPY . .
-WORKDIR "/src/GaleonServer.Api"
-RUN dotnet build "GaleonServer.Api.csproj" -c Release -o /app/build
+WORKDIR /src
+RUN dotnet build GaleonServer.Api.csproj -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish "GaleonServer.Api.csproj" -c Release -o /app/publish
+RUN dotnet publish GaleonServer.Api.csproj -c Release -o /app
 
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "GaleonServer.Api.dll"]

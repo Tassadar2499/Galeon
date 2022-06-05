@@ -5,17 +5,17 @@ VisualStudioVersion = 17.2.32317.152
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TorrentTest", "src\TorrentTest\TorrentTest.csproj", "{86428C35-2F1E-485D-9860-E61A0295F32F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaleonServer.Api", "src\GaleonServer.Api\GaleonServer.Api.csproj", "{27F1B059-B679-4D30-93F4-DF7A1296F6A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaleonServer.Api", "src\GaleonServer\GaleonServer.Api\GaleonServer.Api.csproj", "{27F1B059-B679-4D30-93F4-DF7A1296F6A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaleonServer.Core", "src\GaleonServer.Core\GaleonServer.Core.csproj", "{6F61902D-8221-4E99-9CE1-66B12C6EEDB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaleonServer.Core", "src\GaleonServer\GaleonServer.Core\GaleonServer.Core.csproj", "{6F61902D-8221-4E99-9CE1-66B12C6EEDB2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaleonServer.Infrastructure", "src\GaleonServer.Infrastructure\GaleonServer.Infrastructure.csproj", "{4DCABCF2-2958-42A8-B507-5041B47C5907}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaleonServer.Infrastructure", "src\GaleonServer\GaleonServer.Infrastructure\GaleonServer.Infrastructure.csproj", "{4DCABCF2-2958-42A8-B507-5041B47C5907}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonDesktop.App", "src\GaleonDesktop.App\GaleonDesktop.App.csproj", "{4E5CDF91-5603-4093-B95F-C64FDC734CFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.Models", "src\GaleonServer.Models\GaleonServer.Models.csproj", "{E70C5D93-50CB-4654-B362-38543312DBAB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.Models", "src\GaleonServer\GaleonServer.Models\GaleonServer.Models.csproj", "{E70C5D93-50CB-4654-B362-38543312DBAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.Interfaces", "src\GaleonServer.Interfaces\GaleonServer.Interfaces.csproj", "{07861834-7CA6-4D3E-B76B-A439FCAA72EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.Interfaces", "src\GaleonServer\GaleonServer.Interfaces\GaleonServer.Interfaces.csproj", "{07861834-7CA6-4D3E-B76B-A439FCAA72EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
