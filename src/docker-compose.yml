@@ -1,0 +1,38 @@
+services:
+    postgres:
+        container_name: postgres_container
+        image: postgres
+        restart: always
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: admin
+        volumes:
+            - postgresqldata:/data/postgres
+        ports:
+            - 5432:5432
+        deploy:
+            resources:
+                limits:
+                    memory: 2048M
+                reservations:
+                    memory: 2048M
+
+    mailserver:
+        image: maildev/maildev:1.1.0
+        container_name: mailserver
+        ports:
+          - "25:25"
+          - "4000:80"
+    
+    galeonserverapi:
+        image: galeon/galeonserverapi:1.0
+        build: GaleonServerApi
+        depends_on:
+          - postgres
+          - mailserver
+        ports:
+          - "5000"
+        environment:
+          - ASPNETCORE_ENVIRONMENT=Development
+volumes:
+  postgresqldata:
