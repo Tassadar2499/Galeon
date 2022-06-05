@@ -7,7 +7,7 @@ services:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: admin
     volumes:
-        - C:/Kek/distr/docker/volumes/storage/postgresql:/data/postgres
+        - postgresqldata:/data/postgres
     ports:
         - 5432:5432
     deploy:
@@ -16,3 +16,6 @@ services:
                 memory: 2048M
             reservations:
                 memory: 2048M
+                
+volumes:
+  postgresqldata:
