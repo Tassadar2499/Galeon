@@ -56,7 +56,7 @@ namespace GaleonServer.Infrastructure.ServicesInitialize
 
 		private static void AddDatabase(this IServiceCollection services, IConfiguration configuration)
 		{
-			var connectionString = configuration.GetConnectionString("GaleonServerConection");
+			var connectionString = configuration.GetConnectionString("GaleonServerConnection");
 
 			services
 				.AddEntityFrameworkNpgsql()
