@@ -1,21 +1,21 @@
 using GaleonServer.Core.Models;
-using GaleonServer.Models.Queries;
+using GaleonServer.Models.Commands;
 using GaleonServer.Models.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace GaleonServer.Core.Queries;
+namespace GaleonServer.Core.Commands;
 
-public class ConfirmEmailQueryHandler : IRequestHandler<ConfirmEmailQuery, SimpleResponse>
+public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, SimpleResponse>
 {
     private readonly UserManager<User> _userManager;
 
-    public ConfirmEmailQueryHandler(UserManager<User> userManager)
+    public ConfirmEmailCommandHandler(UserManager<User> userManager)
     {
         _userManager = userManager;
     }
 
-    public async Task<SimpleResponse> Handle(ConfirmEmailQuery request, CancellationToken cancellationToken)
+    public async Task<SimpleResponse> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
     {
         var userId = request.UserId;
         var user = await _userManager.FindByIdAsync(userId);

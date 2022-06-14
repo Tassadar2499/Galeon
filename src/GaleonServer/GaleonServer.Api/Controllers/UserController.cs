@@ -45,13 +45,36 @@ public class UserController : ControllerBase
         return await _mediator.Send(command);
     }
     
-    [HttpGet]
-    public async Task<ActionResult<SimpleResponse>> ConfirmEmail(ConfirmEmailQuery query)
+    [HttpPost("forgot-password")]
+    public async Task<ActionResult<SimpleResponse>> ForgotPassword(ForgotPasswordCommand command)
     {
-        return await _mediator.Send(query);
+        command.SetCreateCallbackUrl(CreateResetPasswordCheckCallbackUrl);
+
+        return await _mediator.Send(command);
     }
     
+    [HttpPost("reset-password")]
+    public async Task<ActionResult<SimpleResponse>> ResetPassword(ResetPasswordCommand command)
+    {
+        return await _mediator.Send(command);
+    }
+    
+    [HttpGet(nameof(ResetPasswordCheck))]
+    public ActionResult<SimpleResponse> ResetPasswordCheck(string code)
+    {
+        return string.IsNullOrEmpty(code)
+            ? SimpleResponse.CreateError("Code is empty")
+            : SimpleResponse.CreateSucceed();
+    }
+    
+    [HttpGet(nameof(ConfirmEmail))]
+    public async Task<ActionResult<SimpleResponse>> ConfirmEmail(ConfirmEmailCommand command)
+    {
+        return await _mediator.Send(command);
+    }
+
     private string? CreateConfirmEmailCallbackUrl(UserCallbackUrlDto userCallbackUrlDto) => CreateCallbackUrl(userCallbackUrlDto, nameof(ConfirmEmail));
+    private string? CreateResetPasswordCheckCallbackUrl(UserCallbackUrlDto userCallbackUrlDto) => CreateCallbackUrl(userCallbackUrlDto, nameof(ResetPasswordCheck));
 
     private string? CreateCallbackUrl(UserCallbackUrlDto userCallbackUrlDto, string action)
     {

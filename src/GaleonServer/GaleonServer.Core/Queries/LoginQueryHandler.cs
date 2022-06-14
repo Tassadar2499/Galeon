@@ -27,8 +27,12 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, UserLoginResponse>
         var user = await _userManager.FindByEmailAsync(request.Email)
                    ?? throw new HttpResponseException(HttpStatusCode.Unauthorized);
 
-        var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
-        if (result.Succeeded is false)
+        var emailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
+        if (emailConfirmed is false)
+            throw new HttpResponseException(HttpStatusCode.Unauthorized);
+
+        var passwordResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+        if (passwordResult.Succeeded is false)
             throw new HttpResponseException(HttpStatusCode.Unauthorized);
 
         var token = _jwtTokenGateway.CreateToken(user);
