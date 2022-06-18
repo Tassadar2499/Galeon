@@ -11,11 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaleonServer.Core", "src\Ga
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaleonServer.Infrastructure", "src\GaleonServer\GaleonServer.Infrastructure\GaleonServer.Infrastructure.csproj", "{4DCABCF2-2958-42A8-B507-5041B47C5907}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonDesktop.App", "src\GaleonDesktop.App\GaleonDesktop.App.csproj", "{4E5CDF91-5603-4093-B95F-C64FDC734CFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaleonServer.Models", "src\GaleonServer\GaleonServer.Models\GaleonServer.Models.csproj", "{E70C5D93-50CB-4654-B362-38543312DBAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.Models", "src\GaleonServer\GaleonServer.Models\GaleonServer.Models.csproj", "{E70C5D93-50CB-4654-B362-38543312DBAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaleonServer.Interfaces", "src\GaleonServer\GaleonServer.Interfaces\GaleonServer.Interfaces.csproj", "{07861834-7CA6-4D3E-B76B-A439FCAA72EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.Interfaces", "src\GaleonServer\GaleonServer.Interfaces\GaleonServer.Interfaces.csproj", "{07861834-7CA6-4D3E-B76B-A439FCAA72EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonDesktop.App", "src\GaleonDesktop.App\GaleonDesktop.App.csproj", "{D010A3E2-38D3-4CDA-AED3-ED7F8FD87BD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,12 +39,6 @@ Global
 		{4DCABCF2-2958-42A8-B507-5041B47C5907}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DCABCF2-2958-42A8-B507-5041B47C5907}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DCABCF2-2958-42A8-B507-5041B47C5907}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4E5CDF91-5603-4093-B95F-C64FDC734CFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4E5CDF91-5603-4093-B95F-C64FDC734CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4E5CDF91-5603-4093-B95F-C64FDC734CFF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{4E5CDF91-5603-4093-B95F-C64FDC734CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4E5CDF91-5603-4093-B95F-C64FDC734CFF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4E5CDF91-5603-4093-B95F-C64FDC734CFF}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{E70C5D93-50CB-4654-B362-38543312DBAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E70C5D93-50CB-4654-B362-38543312DBAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E70C5D93-50CB-4654-B362-38543312DBAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -53,6 +47,12 @@ Global
 		{07861834-7CA6-4D3E-B76B-A439FCAA72EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07861834-7CA6-4D3E-B76B-A439FCAA72EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07861834-7CA6-4D3E-B76B-A439FCAA72EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D010A3E2-38D3-4CDA-AED3-ED7F8FD87BD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D010A3E2-38D3-4CDA-AED3-ED7F8FD87BD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D010A3E2-38D3-4CDA-AED3-ED7F8FD87BD6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D010A3E2-38D3-4CDA-AED3-ED7F8FD87BD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D010A3E2-38D3-4CDA-AED3-ED7F8FD87BD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D010A3E2-38D3-4CDA-AED3-ED7F8FD87BD6}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
