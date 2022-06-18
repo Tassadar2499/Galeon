@@ -14,6 +14,8 @@ services:
             - "443"
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
+        links:
+            - "postgres"
 
     postgres:
         container_name: postgres_container
@@ -34,8 +36,8 @@ services:
                     memory: 2048M
 
     mailserver:
-        image: maildev/maildev:1.1.0
         container_name: mailserver
+        image: maildev/maildev:1.1.0
         ports:
             - 25:25
             - 4000:80
