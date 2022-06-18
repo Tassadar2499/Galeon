@@ -1,0 +1,42 @@
+﻿@page "/games"
+
+@using GaleonDesktop.App.Data
+@inject GaleonService GaleonService
+
+<h1>Games</h1>
+
+<p>All games in database.</p>
+
+@if (games == null)
+{
+	<p><em>Loading...</em></p>
+}
+else
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Name</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var game in games)
+			{
+				<tr>
+					<td>@game.Id</td>
+					<td>@game.Name</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+	private Game[] games;
+
+	protected override async Task OnInitializedAsync()
+	{
+		games = await GaleonService.GetAllGamesAsync();
+	}
+}

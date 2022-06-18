@@ -20,7 +20,7 @@ namespace GaleonDesktop.App
 		builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
 
-			builder.Services.AddSingleton<WeatherForecastService>();
+			builder.Services.AddSingleton<GaleonService>();
 
 			return builder.Build();
 		}
