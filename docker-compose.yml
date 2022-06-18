@@ -1,4 +1,20 @@
+version: '3.4'
+
 services:
+    galeonserver.api:
+        image: ${DOCKER_REGISTRY-}galeonserverapi
+        build:
+            context: .
+            dockerfile: src/GaleonServer/GaleonServer.Api/Dockerfile
+        depends_on:
+            - postgres
+            - mailserver
+        ports:
+            - "80"
+            - "443"
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+
     postgres:
         container_name: postgres_container
         image: postgres
@@ -21,18 +37,8 @@ services:
         image: maildev/maildev:1.1.0
         container_name: mailserver
         ports:
-          - "25:25"
-          - "4000:80"
-    
-    galeonserverapi:
-        image: galeon/galeonserverapi:1.0
-        build: GaleonServer
-        depends_on:
-          - postgres
-          - mailserver
-        ports:
-          - "5000"
-        environment:
-          - ASPNETCORE_ENVIRONMENT=Development
+            - 25:25
+            - 4000:80
+
 volumes:
-  postgresqldata:
+    postgresqldata:
