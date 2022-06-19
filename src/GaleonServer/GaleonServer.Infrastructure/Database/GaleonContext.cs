@@ -21,6 +21,7 @@ namespace GaleonServer.Infrastructure.Database
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			base.OnModelCreating(modelBuilder);
 			modelBuilder.ApplyConfigurationsFromAssembly(typeof(GaleonContext).Assembly);
 		}
 
