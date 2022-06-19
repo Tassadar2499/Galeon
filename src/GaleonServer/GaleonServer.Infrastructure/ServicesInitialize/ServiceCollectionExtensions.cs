@@ -8,6 +8,7 @@ using GaleonServer.Interfaces.Gateways;
 using GaleonServer.Models.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,7 +37,8 @@ namespace GaleonServer.Infrastructure.ServicesInitialize
 			var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
 			identityBuilder.AddEntityFrameworkStores<GaleonContext>();
 			identityBuilder.AddSignInManager<SignInManager<User>>();
-			
+			identityBuilder.AddDefaultTokenProviders();
+
 			var tokenKeyParamName = configuration["Identity:TokenKey"];
 			var tokenKeyParamBytes = Encoding.UTF8.GetBytes(tokenKeyParamName);
 			var key = new SymmetricSecurityKey(tokenKeyParamBytes);
