@@ -9,6 +9,11 @@ namespace GaleonServer.Infrastructure.Database.Configurations
 		public void Configure(EntityTypeBuilder<Game> builder)
 		{
 			builder.HasKey(x => x.Id);
+
+			builder
+				.HasMany<UserToGame>()
+				.WithOne(x => x.Game)
+				.HasPrincipalKey(x => x.Id);
 		}
 	}
 }
