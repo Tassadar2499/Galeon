@@ -6,6 +6,7 @@ using Xunit;
 
 namespace GaleonServer.ContractTests;
 
+[Collection(nameof(IntegrationTestsCollection))]
 public class AuthorizationTests
 {
     private static string RequestsPath => $"{Consts.DefaultRequestPath}/{nameof(AuthorizationTests)}";

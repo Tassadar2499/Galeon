@@ -21,11 +21,11 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "integration_tests", "integration_tests", "{BD42E0FB-DD23-4805-B4E9-C874695C6A92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.ContractTests", "GaleonServer.ContractTests\GaleonServer.ContractTests.csproj", "{9E77D531-EFCB-448D-8FCA-892A106055F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.ContractTests", "src\integration_tests\GaleonServer.ContractTests\GaleonServer.ContractTests.csproj", "{9E77D531-EFCB-448D-8FCA-892A106055F7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit_tests", "unit_tests", "{F3F3C2D1-8404-4986-94AD-065B33150DA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.UnitTests", "GaleonServer.UnitTests\GaleonServer.UnitTests.csproj", "{3AF0EF9F-C5BA-42FE-99D4-DD4CC3145110}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.UnitTests", "src\unit_tests\GaleonServer.UnitTests\GaleonServer.UnitTests.csproj", "{3AF0EF9F-C5BA-42FE-99D4-DD4CC3145110}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

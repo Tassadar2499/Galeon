@@ -23,13 +23,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\GaleonServer\GaleonServer.Api\GaleonServer.Api.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Update="Requests\AuthorizationTests\Check_registration.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\GaleonServer\GaleonServer.Api\GaleonServer.Api.csproj" />
     </ItemGroup>
 
 </Project>
