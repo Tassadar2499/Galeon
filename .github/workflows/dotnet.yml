@@ -17,6 +17,8 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
+    - name: Restore workloads dependencies
+      run: dotnet workload restore Galeon.sln
     - name: Restore dependencies
       run: dotnet restore Galeon.sln
     - name: Build
