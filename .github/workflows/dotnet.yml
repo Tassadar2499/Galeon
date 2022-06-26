@@ -18,9 +18,9 @@ jobs:
       with:
         dotnet-version: 6.x
     - name: Restore GaleonServer dependencies
-      run: dotnet restore GaleonServer.Api.csproj
+      run: dotnet restore src/GaleonServer/GaleonServer.Api/GaleonServer.Api.csproj
     - name: Build GaleonServer
-      run: dotnet restore GaleonServer.Api.csproj --no-restore
+      run: dotnet build src/GaleonServer/GaleonServer.Api/GaleonServer.Api.csproj --no-restore
     - name: Unit tests
       run: dotnet test src/unit_tests/GaleonServer.UnitTests/GaleonServer.UnitTests.csproj
     - name: Integration tests
