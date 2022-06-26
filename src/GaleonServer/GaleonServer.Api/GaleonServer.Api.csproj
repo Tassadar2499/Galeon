@@ -26,4 +26,10 @@
     <ProjectReference Include="..\GaleonServer.Infrastructure\GaleonServer.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <DependentUpon>appsettings.json</DependentUpon>
+    </Content>
+  </ItemGroup>
+
 </Project>

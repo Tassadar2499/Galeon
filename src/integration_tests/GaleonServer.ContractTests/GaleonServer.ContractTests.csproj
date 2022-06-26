@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="DotNet.Testcontainers" Version="1.7.0-beta.2269" />
         <PackageReference Include="FluentAssertions" Version="6.5.1" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.2" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
