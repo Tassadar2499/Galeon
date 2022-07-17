@@ -35,24 +35,26 @@ public class IntegrationTestWebApplicationFactory<TProgram> : WebApplicationFact
     
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.ConfigureTestServices(services =>
-        {
-            services.RemoveDbContext<GaleonContext>();
-            services.AddDbContext<GaleonContext>(options => { options.UseNpgsql(_container.ConnectionString); });
-            services.EnsureDbCreated<GaleonContext>();
-            
-            services.RemoveDbContext<GaleonReadonlyContext>();
-            services.AddDbContext<GaleonReadonlyContext>(options => { options.UseNpgsql(_container.ConnectionString); });
-            services.EnsureDbCreated<GaleonReadonlyContext>();
-            
-            services.RemoveService<IEmailGateway>();
-            services.AddTransient<IEmailGateway, EmailGatewayStub>();
-        });
+        builder.ConfigureTestServices(ConfigureTestServices);
     }
 
     public async Task InitializeAsync() => await _container.StartAsync();
 
     public new async Task DisposeAsync() => await _container.DisposeAsync();
+
+    private void ConfigureTestServices(IServiceCollection services)
+    {
+        services.RemoveDbContext<GaleonContext>();
+        services.AddDbContext<GaleonContext>(options => { options.UseNpgsql(_container.ConnectionString); });
+        services.EnsureDbCreated<GaleonContext>();
+            
+        services.RemoveDbContext<GaleonReadonlyContext>();
+        services.AddDbContext<GaleonReadonlyContext>(options => { options.UseNpgsql(_container.ConnectionString); });
+        services.EnsureDbCreated<GaleonReadonlyContext>();
+            
+        services.RemoveService<IEmailGateway>();
+        services.AddTransient<IEmailGateway, EmailGatewayStub>();
+    }
 
     private static TestcontainerDatabase InitTestContainer()
     {
