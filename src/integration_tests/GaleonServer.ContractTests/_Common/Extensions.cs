@@ -1,8 +1,11 @@
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using GaleonServer.Infrastructure.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace GaleonServer.ContractTests._Common;
 
@@ -29,7 +32,15 @@ public static class Extensions
     public static void RemoveDbContext<T>(this IServiceCollection services) where T : DbContext
     {
         var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<T>));
-        if (descriptor != null) services.Remove(descriptor);
+        if (descriptor is not null)
+            services.Remove(descriptor);
+    }
+    
+    public static void RemoveService<T>(this IServiceCollection services)
+    {
+        var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(T));
+        if (descriptor is not null)
+            services.Remove(descriptor);
     }
 
     public static void EnsureDbCreated<T>(this IServiceCollection services) where T : DbContext
@@ -40,5 +51,21 @@ public static class Extensions
         var scopedServices = scope.ServiceProvider;
         var context = scopedServices.GetRequiredService<T>();
         context.Database.EnsureCreated();
+    }
+
+    public static void RecreateDatabase(this IntegrationTestWebApplicationFactory factory)
+    {
+        using var sp = factory.Server.Services.CreateScope();
+        var context = sp.ServiceProvider.GetRequiredService<GaleonContext>();
+        var database = context.Database;
+        database.EnsureDeleted();
+        database.EnsureCreated();
+    }
+
+    public static async Task<T> ReadRequest<T>(this string path)
+    {
+        var text = await File.ReadAllTextAsync(path);
+        
+        return JsonConvert.DeserializeObject<T>(text);
     }
 }

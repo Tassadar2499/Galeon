@@ -1,12 +1,23 @@
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using FluentAssertions;
 using GaleonServer.ContractTests._Common;
+using GaleonServer.ContractTests.Stubs;
 using GaleonServer.Core.Gateways;
+using GaleonServer.Infrastructure.Database;
+using GaleonServer.Interfaces.Gateways;
 using GaleonServer.Models.Commands;
+using GaleonServer.Models.Dto;
+using GaleonServer.Models.Responses;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -24,28 +35,34 @@ public class AuthorizationTests
     }
 
     [Fact]
-    public async void Kek()
+    public async void Check_registration()
     {
-        var sp = _factory.Server.Services.CreateScope();
-        var gameGateway = sp.ServiceProvider.GetService<IGameGateway>();
-        var readonlyGateway = sp.ServiceProvider.GetService<IGameReadonlyGateway>();
-        await gameGateway.Add("kek", CancellationToken.None);
-
-        var games = new List<string>();
-        await foreach (var game in readonlyGateway.GetAll(CancellationToken.None))
-        {
-            games.Add(game.Name);
-        }
-
-        games.Single().Should().Be("kek");
+        //arrange
+        var request = await GetRequest<RegisterCommand>(nameof(Check_registration));
+        using var client = _factory.CreateClient();
+        
+        //act
+        var responseMessage = await client.PostAsJsonAsync("api/authorization/register", request);
+        var responseStr = await responseMessage.Content.ReadAsStringAsync();
+        
+        //assert
+        responseMessage.StatusCode.Should().Be(HttpStatusCode.OK);
+        
+        var response = JsonConvert.DeserializeObject<SimpleResponse>(responseStr);
+        response.Succeed.Should().BeTrue();
+        
+        EmailGatewayStub.EmailGateway.Verify(z => z.SendEmail(It.Is<SendEmailDto>(x => x.Email == request.Email), It.IsAny<CancellationToken>()), Times.Once);
+        
+        using var sp = _factory.Server.Services.CreateScope();
+        var context = sp.ServiceProvider.GetRequiredService<GaleonContext>();
+        var user = await context.Users.SingleOrDefaultAsync(z => z.Email == request.Email);
+        user.Should().NotBeNull();
     }
 
-    private static T GetRequest<T>(string methodName)
+    private static async Task<T> GetRequest<T>(string methodName)
     {
         var requestFilePath = $"{RequestsPath}/{methodName}.json";
-        var text = File.ReadAllText(requestFilePath);
-        var request = JsonConvert.DeserializeObject<T>(text);
 
-        return request;
+        return await requestFilePath.ReadRequest<T>();
     }
 }

@@ -68,8 +68,14 @@ public class AuthorizationController : ControllerBase
     }
     
     [HttpGet(nameof(ConfirmEmail))]
-    public async Task<ActionResult<SimpleResponse>> ConfirmEmail(ConfirmEmailCommand command)
+    public async Task<ActionResult<SimpleResponse>> ConfirmEmail([FromQuery] string userId, [FromQuery] string code)
     {
+        var command = new ConfirmEmailCommand
+        {
+            UserId = userId,
+            Code = code
+        };
+
         return await _mediator.Send(command);
     }
 

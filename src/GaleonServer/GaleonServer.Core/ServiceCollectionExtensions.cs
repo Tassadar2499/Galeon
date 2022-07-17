@@ -9,7 +9,7 @@ namespace GaleonServer.Core
 	{
 		public static void AddCore(this IServiceCollection services)
 		{
-			services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+			services.AddMediatR(Assembly.GetExecutingAssembly());
 		}
 
 		public static IServiceCollection ConfigureFromSection<T>(this IServiceCollection services, IConfiguration configuration, string path)
