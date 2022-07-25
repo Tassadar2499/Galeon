@@ -1,9 +1,6 @@
-using GaleonServer.Models.Responses;
-using MediatR;
-
 namespace GaleonServer.Models.Commands;
 
-public class ResetPasswordCommand : IRequest<SimpleResponse>
+public class ResetPasswordCommand
 {
     //TODO: Add fluent validation
     public string Email { get; init; }

@@ -1,10 +1,10 @@
 using System.Net;
 using GaleonServer.Core.Exceptions;
+using GaleonServer.Core.Services.Interfaces;
 using GaleonServer.Models.Commands;
 using GaleonServer.Models.Dto;
 using GaleonServer.Models.Queries;
 using GaleonServer.Models.Responses;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GaleonServer.Api.Controllers;
@@ -13,20 +13,19 @@ namespace GaleonServer.Api.Controllers;
 [Route("api/[controller]")]
 public class AuthorizationController : ControllerBase
 {
-    private readonly IMediator _mediator;
+    private readonly IAuthorizationService _authorizationService;
 
-    public AuthorizationController(IMediator mediator)
+    public AuthorizationController(IAuthorizationService authorizationService)
     {
-        _mediator = mediator;
+        _authorizationService = authorizationService;
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<UserLoginResponse>> Login(LoginQuery query)
+    public async Task<ActionResult<UserLoginResponse>> Login(LoginQuery query, CancellationToken cancellationToken)
     {
-        //TODO: Отрефакторить с аттрибутами
         try
         {
-            return await _mediator.Send(query);
+            return await _authorizationService.Handle<LoginQuery, UserLoginResponse>(query, cancellationToken);
         }
         catch (HttpResponseException ex)
         {
@@ -38,25 +37,25 @@ public class AuthorizationController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<SimpleResponse>> Register(RegisterCommand command)
+    public async Task<ActionResult<SimpleResponse>> Register(RegisterCommand command, CancellationToken cancellationToken)
     {
         command.SetCreateCallbackUrl(CreateConfirmEmailCallbackUrl);
-        
-        return await _mediator.Send(command);
+
+        return await _authorizationService.Handle<RegisterCommand, SimpleResponse>(command, cancellationToken);
     }
     
     [HttpPost("forgot-password")]
-    public async Task<ActionResult<SimpleResponse>> ForgotPassword(ForgotPasswordCommand command)
+    public async Task<ActionResult<SimpleResponse>> ForgotPassword(ForgotPasswordCommand command, CancellationToken cancellationToken)
     {
         command.SetCreateCallbackUrl(CreateResetPasswordCheckCallbackUrl);
 
-        return await _mediator.Send(command);
+        return await _authorizationService.Handle<ForgotPasswordCommand, SimpleResponse>(command, cancellationToken);
     }
     
     [HttpPost("reset-password")]
-    public async Task<ActionResult<SimpleResponse>> ResetPassword(ResetPasswordCommand command)
+    public async Task<ActionResult<SimpleResponse>> ResetPassword(ResetPasswordCommand command, CancellationToken cancellationToken)
     {
-        return await _mediator.Send(command);
+        return await _authorizationService.Handle<ResetPasswordCommand, SimpleResponse>(command, cancellationToken);
     }
     
     [HttpGet(nameof(ResetPasswordCheck))]
@@ -68,7 +67,7 @@ public class AuthorizationController : ControllerBase
     }
     
     [HttpGet(nameof(ConfirmEmail))]
-    public async Task<ActionResult<SimpleResponse>> ConfirmEmail([FromQuery] string userId, [FromQuery] string code)
+    public async Task<ActionResult<SimpleResponse>> ConfirmEmail([FromQuery] string userId, [FromQuery] string code, CancellationToken cancellationToken)
     {
         var command = new ConfirmEmailCommand
         {
@@ -76,7 +75,7 @@ public class AuthorizationController : ControllerBase
             Code = code
         };
 
-        return await _mediator.Send(command);
+        return await _authorizationService.Handle<ConfirmEmailCommand, SimpleResponse>(command, cancellationToken);
     }
 
     private string? CreateConfirmEmailCallbackUrl(UserCallbackUrlDto userCallbackUrlDto) => CreateCallbackUrl(userCallbackUrlDto, nameof(ConfirmEmail));

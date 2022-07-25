@@ -1,11 +1,9 @@
 using System.Text.Json.Serialization;
 using GaleonServer.Models.Dto;
-using GaleonServer.Models.Responses;
-using MediatR;
 
 namespace GaleonServer.Models.Commands;
 
-public class RegisterCommand : IRequest<SimpleResponse>
+public class RegisterCommand
 {
     public string Email { get; init; } = null!;
     public string Password { get; init; } = null!;

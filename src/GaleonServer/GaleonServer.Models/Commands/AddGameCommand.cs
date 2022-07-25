@@ -1,8 +1,6 @@
-using MediatR;
-
 namespace GaleonServer.Models.Commands;
 
-public class AddGameCommand : IRequest
+public class AddGameCommand
 {
     public string Name { get; set; } = null!;
 }

@@ -2,6 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using GaleonServer.Core._Common;
+using GaleonServer.Core.Services;
+using GaleonServer.Core.Services.Interfaces;
 
 namespace GaleonServer.Core
 {
@@ -9,6 +12,12 @@ namespace GaleonServer.Core
 	{
 		public static void AddCore(this IServiceCollection services)
 		{
+			services.AddTransient(typeof(Lazy<>), typeof(Lazier<>));
+			
+			services.AddTransient<IAuthorizationService, AuthorizationService>();
+			services.AddTransient<IGameService, GameService>();
+			services.AddTransient<IUserService, UserService>();
+
 			services.AddMediatR(Assembly.GetExecutingAssembly());
 		}
 

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
+using GaleonServer.Core.Services.Interfaces;
 using GaleonServer.Models.Commands;
 using GaleonServer.Models.Queries;
 using GaleonServer.Models.Responses;
@@ -12,26 +13,28 @@ namespace GaleonServer.Api.Controllers;
 public class GameController : ControllerBase
 {
 	private readonly IMediator _mediator;
+	private readonly IGameService _gameService;
 
-	public GameController(IMediator mediator)
+	public GameController(IMediator mediator, IGameService gameService)
 	{
 		_mediator = mediator;
+		_gameService = gameService;
 	}
 
 	[HttpGet("all")]
 	public async IAsyncEnumerable<GameResponse> GetAll([EnumeratorCancellation] CancellationToken cancellationToken)
 	{
-		var query = new GetAllGamesQuery();
+		var request = new Unit();
 
-		var games = _mediator.CreateStream(query, cancellationToken);
+		var games = _gameService.HandleEnumerable<Unit, GameResponse>(request, cancellationToken);
 
 		await foreach (var game in games.WithCancellation(cancellationToken))
 			yield return game;
 	}
 
 	[HttpPost("add")]
-	public async Task Add([FromBody] AddGameCommand command, CancellationToken cancellationToken)
+	public async Task<SimpleResponse> Add([FromBody] AddGameCommand command, CancellationToken cancellationToken)
 	{
-		_ = await _mediator.Send(command, cancellationToken);
+		return await _gameService.Handle<AddGameCommand, SimpleResponse>(command, cancellationToken);
 	}
 }

@@ -1,11 +1,9 @@
 using System.Text.Json.Serialization;
 using GaleonServer.Models.Dto;
-using GaleonServer.Models.Responses;
-using MediatR;
 
 namespace GaleonServer.Models.Commands;
 
-public class ForgotPasswordCommand : IRequest<SimpleResponse>
+public class ForgotPasswordCommand
 {
     public string Email { get; init; }
     

@@ -1,8 +1,6 @@
-using MediatR;
-
 namespace GaleonServer.Models.Commands;
 
-public class DeleteUserCommand: IRequest
+public class DeleteUserCommand
 {
     public string Id { get; init; } = null!;
 }

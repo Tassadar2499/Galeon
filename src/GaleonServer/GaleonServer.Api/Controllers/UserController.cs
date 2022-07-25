@@ -1,4 +1,6 @@
+using GaleonServer.Core.Services.Interfaces;
 using GaleonServer.Models.Commands;
+using GaleonServer.Models.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,16 +10,16 @@ namespace GaleonServer.Api.Controllers;
 [Route("api/[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly IMediator _mediator;
+    private readonly IUserService _userService;
 
-    public UserController(IMediator mediator)
+    public UserController(IUserService userService)
     {
-        _mediator = mediator;
+        _userService = userService;
     }
 
     [HttpDelete("delete")]
-    public async Task DeleteUser(DeleteUserCommand command)
+    public async Task<SimpleResponse> DeleteUser(DeleteUserCommand command, CancellationToken cancellationToken)
     {
-        _ = await _mediator.Send(command);
+        return await _userService.Handle<DeleteUserCommand, SimpleResponse>(command, cancellationToken);
     }
 }
