@@ -2,10 +2,11 @@ using System.Text.Json.Serialization;
 using GaleonServer.Models.Dto;
 using GaleonServer.Models.Interfaces.Requests;
 using GaleonServer.Models.Interfaces.Responses;
+using GaleonServer.Models.Responses;
 
 namespace GaleonServer.Models.Commands;
 
-public class RegisterCommand : IAuthorizationServiceRequest
+public class RegisterCommand : IAuthorizationServiceRequest<SimpleResponse>
 {
     public string Email { get; init; } = null!;
     public string Password { get; init; } = null!;

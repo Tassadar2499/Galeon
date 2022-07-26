@@ -1,6 +1,6 @@
 namespace GaleonServer.Models.Interfaces.Requests;
 
-public interface IAuthorizationServiceRequest
+public interface IAuthorizationServiceRequest<T> : IServiceRequest<T>
 {
     
 }

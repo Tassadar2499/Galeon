@@ -16,7 +16,7 @@ namespace GaleonServer.Core.Services;
 public interface IAuthorizationService
 {
     public Task<TResult> Handle<TRequest, TResult>(TRequest request, CancellationToken cancellationToken)
-        where TRequest : IAuthorizationServiceRequest
+        where TRequest : IAuthorizationServiceRequest<TResult>
         where TResult : IAuthorizationServiceResponse;
 }
 
@@ -36,7 +36,7 @@ public class AuthorizationService : IAuthorizationService
     }
 
     public async Task<TResult> Handle<TRequest, TResult>(TRequest request, CancellationToken cancellationToken)
-        where TRequest : IAuthorizationServiceRequest
+        where TRequest : IAuthorizationServiceRequest<TResult>
         where TResult : IAuthorizationServiceResponse
     {
         IAuthorizationServiceResponse result = request switch
