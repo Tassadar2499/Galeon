@@ -6,7 +6,6 @@ using GaleonServer.Interfaces.Gateways;
 using GaleonServer.Models.Commands;
 using GaleonServer.Models.Dto;
 using GaleonServer.Models.Interfaces.Requests;
-using GaleonServer.Models.Interfaces.Responses;
 using GaleonServer.Models.Queries;
 using GaleonServer.Models.Responses;
 using Microsoft.AspNetCore.Identity;
@@ -16,8 +15,7 @@ namespace GaleonServer.Core.Services;
 public interface IAuthorizationService
 {
     public Task<TResult> Handle<TRequest, TResult>(TRequest request, CancellationToken cancellationToken)
-        where TRequest : IAuthorizationServiceRequest<TResult>
-        where TResult : IAuthorizationServiceResponse;
+        where TRequest : IAuthorizationServiceRequest<TResult>;
 }
 
 public class AuthorizationService : IAuthorizationService
@@ -37,9 +35,8 @@ public class AuthorizationService : IAuthorizationService
 
     public async Task<TResult> Handle<TRequest, TResult>(TRequest request, CancellationToken cancellationToken)
         where TRequest : IAuthorizationServiceRequest<TResult>
-        where TResult : IAuthorizationServiceResponse
     {
-        IAuthorizationServiceResponse result = request switch
+        object result = request switch
         {
             LoginQuery loginQuery => await HandleLogin(loginQuery, cancellationToken),
             ConfirmEmailCommand confirmEmailCommand => await HandleConfirmEmail(confirmEmailCommand, cancellationToken),
