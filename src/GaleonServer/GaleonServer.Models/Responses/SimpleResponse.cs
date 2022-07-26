@@ -1,6 +1,8 @@
+using GaleonServer.Models.Interfaces.Responses;
+
 namespace GaleonServer.Models.Responses;
 
-public class SimpleResponse
+public class SimpleResponse : IAuthorizationServiceResponse
 {
     public bool Succeed { get; set; }
     public string Error { get; set; }

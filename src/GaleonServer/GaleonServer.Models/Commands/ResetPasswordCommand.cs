@@ -1,6 +1,9 @@
+using GaleonServer.Models.Interfaces.Requests;
+using GaleonServer.Models.Interfaces.Responses;
+
 namespace GaleonServer.Models.Commands;
 
-public class ResetPasswordCommand
+public class ResetPasswordCommand : IAuthorizationServiceRequest
 {
     //TODO: Add fluent validation
     public string Email { get; init; }

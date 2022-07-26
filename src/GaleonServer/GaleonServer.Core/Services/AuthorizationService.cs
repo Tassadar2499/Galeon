@@ -2,15 +2,23 @@ using System.Net;
 using GaleonServer.Core.Exceptions;
 using GaleonServer.Core.Gateways;
 using GaleonServer.Core.Models;
-using GaleonServer.Core.Services.Interfaces;
 using GaleonServer.Interfaces.Gateways;
 using GaleonServer.Models.Commands;
 using GaleonServer.Models.Dto;
+using GaleonServer.Models.Interfaces.Requests;
+using GaleonServer.Models.Interfaces.Responses;
 using GaleonServer.Models.Queries;
 using GaleonServer.Models.Responses;
 using Microsoft.AspNetCore.Identity;
 
 namespace GaleonServer.Core.Services;
+
+public interface IAuthorizationService
+{
+    public Task<TResult> Handle<TRequest, TResult>(TRequest request, CancellationToken cancellationToken)
+        where TRequest : IAuthorizationServiceRequest
+        where TResult : IAuthorizationServiceResponse;
+}
 
 public class AuthorizationService : IAuthorizationService
 {
@@ -28,8 +36,10 @@ public class AuthorizationService : IAuthorizationService
     }
 
     public async Task<TResult> Handle<TRequest, TResult>(TRequest request, CancellationToken cancellationToken)
+        where TRequest : IAuthorizationServiceRequest
+        where TResult : IAuthorizationServiceResponse
     {
-        object result = request switch
+        IAuthorizationServiceResponse result = request switch
         {
             LoginQuery loginQuery => await HandleLogin(loginQuery, cancellationToken),
             ConfirmEmailCommand confirmEmailCommand => await HandleConfirmEmail(confirmEmailCommand, cancellationToken),
