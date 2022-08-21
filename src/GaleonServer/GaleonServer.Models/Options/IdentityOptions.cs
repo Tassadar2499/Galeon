@@ -2,6 +2,6 @@
 {
 	public class IdentityOptions
 	{
-		public string TokenKey { get; init; } = null!;
+		public string TokenKey { get; set; } = null!;
 	}
 }

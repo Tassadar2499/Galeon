@@ -5,6 +5,7 @@ using DotNet.Testcontainers.Containers;
 using GaleonServer.ContractTests.Stubs;
 using GaleonServer.Infrastructure.Database;
 using GaleonServer.Interfaces.Gateways;
+using GaleonServer.Models.Options;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -44,6 +45,8 @@ public class IntegrationTestWebApplicationFactory<TProgram> : WebApplicationFact
 
     private void ConfigureTestServices(IServiceCollection services)
     {
+        services.Configure<IdentityOptions>(opts => opts.TokenKey = "MisterPepeVPepeStane");
+        
         services.RemoveDbContext<GaleonContext>();
         services.AddDbContext<GaleonContext>(options => { options.UseNpgsql(_container.ConnectionString); });
 
