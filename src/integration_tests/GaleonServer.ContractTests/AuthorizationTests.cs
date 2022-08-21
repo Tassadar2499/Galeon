@@ -28,34 +28,37 @@ public class AuthorizationTests
 {
     private static string RequestsPath => $"{Consts.DefaultRequestPath}/{nameof(AuthorizationTests)}";
     
-    private readonly IntegrationTestWebApplicationFactory _factory;
+    private readonly HttpClient _httpClient;
+    private readonly GaleonContext _galeonContext;
     public AuthorizationTests(IntegrationTestWebApplicationFactory factory)
     {
-        _factory = factory;
+        _httpClient = factory.CreateClient();
+        
+        var sp = factory.Server.Services.CreateScope();
+        _galeonContext = sp.ServiceProvider.GetRequiredService<GaleonContext>();
     }
 
     [Fact]
     public async void Check_registration()
     {
         //arrange
-        var request = await GetRequest<RegisterCommand>(nameof(Check_registration));
-        using var client = _factory.CreateClient();
-        
+        var methodName = Extensions.GetCurrentMethodName();
+        var request = await GetRequest<RegisterCommand>(methodName);
+        await _galeonContext.RecreateDatabase();
+
         //act
-        var responseMessage = await client.PostAsJsonAsync("api/authorization/register", request);
+        var responseMessage = await _httpClient.PostAsJsonAsync("api/authorization/register", request);
         var responseStr = await responseMessage.Content.ReadAsStringAsync();
         
         //assert
         responseMessage.StatusCode.Should().Be(HttpStatusCode.OK);
         
         var response = JsonConvert.DeserializeObject<SimpleResponse>(responseStr);
-        response.Succeed.Should().BeTrue();
+        response?.Succeed.Should().BeTrue();
         
         EmailGatewayStub.EmailGateway.Verify(z => z.SendEmail(It.Is<SendEmailDto>(x => x.Email == request.Email), It.IsAny<CancellationToken>()), Times.Once);
         
-        using var sp = _factory.Server.Services.CreateScope();
-        var context = sp.ServiceProvider.GetRequiredService<GaleonContext>();
-        var user = await context.Users.SingleOrDefaultAsync(z => z.Email == request.Email);
+        var user = await _galeonContext.Users.SingleOrDefaultAsync(z => z.Email == request.Email);
         user.Should().NotBeNull();
     }
 

@@ -1,5 +1,7 @@
+using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using GaleonServer.Infrastructure.Database;
 using MediatR;
@@ -53,19 +55,19 @@ public static class Extensions
         context.Database.EnsureCreated();
     }
 
-    public static void RecreateDatabase(this IntegrationTestWebApplicationFactory factory)
+    public static async Task RecreateDatabase(this GaleonContext context)
     {
-        using var sp = factory.Server.Services.CreateScope();
-        var context = sp.ServiceProvider.GetRequiredService<GaleonContext>();
         var database = context.Database;
-        database.EnsureDeleted();
-        database.EnsureCreated();
+        await database.EnsureDeletedAsync();
+        await database.EnsureCreatedAsync();
     }
+    
+    public static string GetCurrentMethodName([CallerMemberName] string name = "") => name;
 
     public static async Task<T> ReadRequest<T>(this string path)
     {
         var text = await File.ReadAllTextAsync(path);
         
-        return JsonConvert.DeserializeObject<T>(text);
+        return JsonConvert.DeserializeObject<T>(text)!;
     }
 }

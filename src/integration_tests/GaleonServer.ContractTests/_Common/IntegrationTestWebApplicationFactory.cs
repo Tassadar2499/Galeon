@@ -46,12 +46,10 @@ public class IntegrationTestWebApplicationFactory<TProgram> : WebApplicationFact
     {
         services.RemoveDbContext<GaleonContext>();
         services.AddDbContext<GaleonContext>(options => { options.UseNpgsql(_container.ConnectionString); });
-        services.EnsureDbCreated<GaleonContext>();
-            
+
         services.RemoveDbContext<GaleonReadonlyContext>();
         services.AddDbContext<GaleonReadonlyContext>(options => { options.UseNpgsql(_container.ConnectionString); });
-        services.EnsureDbCreated<GaleonReadonlyContext>();
-            
+
         services.RemoveService<IEmailGateway>();
         services.AddTransient<IEmailGateway, EmailGatewayStub>();
     }
@@ -64,6 +62,7 @@ public class IntegrationTestWebApplicationFactory<TProgram> : WebApplicationFact
             Database = "test_db",
             Username = "postgres",
             Password = "postgres",
+            Port = 5434
         };
         
         return builder.WithDatabase(configuration)
