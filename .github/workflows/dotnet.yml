@@ -26,11 +26,11 @@ jobs:
     - name: Integration tests
       run: dotnet test src/integration_tests/GaleonServer.ContractTests/GaleonServer.ContractTests.csproj
     - name: Build SpecFlow Tests
-      run: dotnet build src/integration_tests/GaleonServer.BehaviourContractTests/GaleonServer.BehaviourContractTests.csproj --configuration Release
+      run: dotnet build src/integration_tests/GaleonServer.BehaviourContractTests/GaleonServer.BehaviourContractTests.csproj
     - name: Run SpecFlow Tests
       uses: cryptic-wizard/run-specflow-tests@v1.3.1
       with:
-        test-assembly-path: src/integration_tests/GaleonServer.BehaviourContractTests/bin/Release/net6.0
+        test-assembly-path: src/integration_tests/GaleonServer.BehaviourContractTests/bin/Debug/net6.0
         test-assembly-dll: GaleonServer.BehaviourContractTests.dll
         output-html: GaleonServerBehaviourContractTestsResults.html
         no-build: true
