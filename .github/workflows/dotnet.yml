@@ -17,12 +17,12 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.x
+    - name: Build GaleonServer
+      run: dotnet build src/GaleonServer/GaleonServer.Api/GaleonServer.Api.csproj
     - name: Unit tests
       run: dotnet test src/unit_tests/GaleonServer.UnitTests/GaleonServer.UnitTests.csproj
     - name: Integration tests
       run: dotnet test src/integration_tests/GaleonServer.ContractTests/GaleonServer.ContractTests.csproj
-    - name: Build GaleonServer
-      run: dotnet build src/GaleonServer/GaleonServer.Api/GaleonServer.Api.csproj
     - name: Run SpecFlow Tests
       run: dotnet test src/integration_tests/GaleonServer.BehaviourContractTests/GaleonServer.BehaviourContractTests.csproj
     - name: Create SpecFlow Tests documentation
