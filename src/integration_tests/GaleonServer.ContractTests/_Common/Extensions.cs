@@ -55,13 +55,6 @@ public static class Extensions
         context.Database.EnsureCreated();
     }
 
-    public static async Task RecreateDatabase(this GaleonContext context)
-    {
-        var database = context.Database;
-        await database.EnsureDeletedAsync();
-        await database.EnsureCreatedAsync();
-    }
-    
     public static string GetCurrentMethodName([CallerMemberName] string name = "") => name;
 
     public static async Task<T> ReadRequest<T>(this string path)

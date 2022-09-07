@@ -46,7 +46,6 @@ public class AuthorizationTests
         //arrange
         var methodName = Extensions.GetCurrentMethodName();
         var request = await GetRequest<RegisterCommand>(methodName);
-        await _galeonContext.RecreateDatabase();
         
         var linkToRedirect = await CheckRegister(request);
         await CheckConfirmEmail(linkToRedirect);
@@ -64,7 +63,7 @@ public class AuthorizationTests
         
         var response = JsonConvert.DeserializeObject<SimpleResponse>(responseStr);
         response?.Succeed.Should().BeTrue();
-        
+
         EmailGatewayStub.EmailGateway.Verify(z => z.SendEmail(It.Is<SendEmailDto>(x => x.Email == request.Email), It.IsAny<CancellationToken>()), Times.Once);
 
         var user = await _galeonContext.Users.SingleOrDefaultAsync(z => z.Email == request.Email);

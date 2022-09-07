@@ -12,12 +12,10 @@ namespace GaleonServer.Api.Controllers;
 [Route("api/[controller]")]
 public class GameController : ControllerBase
 {
-	private readonly IMediator _mediator;
 	private readonly IGameService _gameService;
 
-	public GameController(IMediator mediator, IGameService gameService)
+	public GameController(IGameService gameService)
 	{
-		_mediator = mediator;
 		_gameService = gameService;
 	}
 

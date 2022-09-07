@@ -1,8 +1,7 @@
-using System.Threading.Tasks;
-using DotNet.Testcontainers.Builders;
+﻿using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
-using GaleonServer.ContractTests.Stubs;
+using GaleonServer.BehaviourContractTests.Stubs;
 using GaleonServer.Infrastructure.Database;
 using GaleonServer.Interfaces.Gateways;
 using GaleonServer.Models.Options;
@@ -11,37 +10,35 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 
-namespace GaleonServer.ContractTests._Common;
+namespace GaleonServer.BehaviourContractTests._Common;
 
-[CollectionDefinition(nameof(IntegrationTestsCollection))]
-public class IntegrationTestsCollection: ICollectionFixture<IntegrationTestWebApplicationFactory>
+public static class IntegrationTestWebApplicationFactorySingleton
 {
+    public static IntegrationTestWebApplicationFactory Instance => new ();
 }
 
 public class IntegrationTestWebApplicationFactory : IntegrationTestWebApplicationFactory<Program>
 {
 }
 
-public class IntegrationTestWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram>, IAsyncLifetime
+public class IntegrationTestWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram>
     where TProgram : class
 {
     private readonly TestcontainerDatabase _container;
-    
-    public IntegrationTestWebApplicationFactory()
+
+    protected IntegrationTestWebApplicationFactory()
     {
         _container = InitTestContainer();
+        
+        var startTask = Task.Run(() => _container.StartAsync());
+        startTask.Wait();
     }
-    
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureTestServices(ConfigureTestServices);
     }
-
-    public async Task InitializeAsync() => await _container.StartAsync();
-
-    public new async Task DisposeAsync() => await _container.DisposeAsync();
 
     private void ConfigureTestServices(IServiceCollection services)
     {
@@ -66,7 +63,7 @@ public class IntegrationTestWebApplicationFactory<TProgram> : WebApplicationFact
             Database = "test_db",
             Username = "postgres",
             Password = "postgres",
-            Port = 5435
+            Port = 5434
         };
         
         return builder.WithDatabase(configuration)
