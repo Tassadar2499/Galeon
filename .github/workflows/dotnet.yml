@@ -27,3 +27,7 @@ jobs:
       run: dotnet test src/integration_tests/GaleonServer.ContractTests/GaleonServer.ContractTests.csproj
     - name: Run SpecFlow Tests
       uses: cryptic-wizard/run-specflow-tests@v1.3.1
+      with:
+        test-assembly-path: src/integration_tests/GaleonServer.BehaviourContractTests/bin/Release/net6.0
+        test-assembly-dll: GaleonServer.BehaviourContractTests.dll
+        output-html: GaleonServerBehaviourContractTestsResults.html
