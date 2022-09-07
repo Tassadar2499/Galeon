@@ -1,5 +1,5 @@
 ﻿Feature: Authorization
-	Simple calculator for adding two numbers
+	Check authorization
 
 @mytag
 Scenario: User registration
