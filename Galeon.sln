@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit_tests", "unit_tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.UnitTests", "src\unit_tests\GaleonServer.UnitTests\GaleonServer.UnitTests.csproj", "{3AF0EF9F-C5BA-42FE-99D4-DD4CC3145110}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.BehaviourContractTests", "GaleonServer.BehaviourContractTests\GaleonServer.BehaviourContractTests.csproj", "{456D022B-1E75-41A0-A440-8F9204B62A2F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.BehaviourContractTests", "src\integration_tests\GaleonServer.BehaviourContractTests\GaleonServer.BehaviourContractTests.csproj", "{456D022B-1E75-41A0-A440-8F9204B62A2F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

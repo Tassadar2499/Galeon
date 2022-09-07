@@ -25,3 +25,8 @@ jobs:
       run: dotnet test src/unit_tests/GaleonServer.UnitTests/GaleonServer.UnitTests.csproj
     - name: Integration tests
       run: dotnet test src/integration_tests/GaleonServer.ContractTests/GaleonServer.ContractTests.csproj
+    - uses: actions/cryptic-wizard/run-specflow-tests@v1.3.1
+      with:
+        test-assembly-path: MySpecflowProject/bin/Release/netcoreapp3.1
+        test-assembly-dll: MySpecflowProject.dll
+        output-html: MyTestResults.html
