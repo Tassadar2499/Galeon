@@ -23,9 +23,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "integration_tests", "integr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit_tests", "unit_tests", "{F3F3C2D1-8404-4986-94AD-065B33150DA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.UnitTests", "src\unit_tests\GaleonServer.UnitTests\GaleonServer.UnitTests.csproj", "{3AF0EF9F-C5BA-42FE-99D4-DD4CC3145110}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaleonServer.UnitTests", "src\unit_tests\GaleonServer.UnitTests\GaleonServer.UnitTests.csproj", "{3AF0EF9F-C5BA-42FE-99D4-DD4CC3145110}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaleonServer.BehaviourContractTests", "src\integration_tests\GaleonServer.BehaviourContractTests\GaleonServer.BehaviourContractTests.csproj", "{456D022B-1E75-41A0-A440-8F9204B62A2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaleonServer.BehaviourContractTests", "src\integration_tests\GaleonServer.BehaviourContractTests\GaleonServer.BehaviourContractTests.csproj", "{456D022B-1E75-41A0-A440-8F9204B62A2F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Torrent.NET", "src\Torrent.NET\Torrent.NET.csproj", "{8A4E5452-92CB-4B93-8513-C2F47E4C2173}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,15 +77,19 @@ Global
 		{456D022B-1E75-41A0-A440-8F9204B62A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{456D022B-1E75-41A0-A440-8F9204B62A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{456D022B-1E75-41A0-A440-8F9204B62A2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A4E5452-92CB-4B93-8513-C2F47E4C2173}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A4E5452-92CB-4B93-8513-C2F47E4C2173}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A4E5452-92CB-4B93-8513-C2F47E4C2173}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A4E5452-92CB-4B93-8513-C2F47E4C2173}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {5163FDCD-C019-44DD-80CC-1FAEBB755125}
-	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3AF0EF9F-C5BA-42FE-99D4-DD4CC3145110} = {F3F3C2D1-8404-4986-94AD-065B33150DA2}
 		{456D022B-1E75-41A0-A440-8F9204B62A2F} = {BD42E0FB-DD23-4805-B4E9-C874695C6A92}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5163FDCD-C019-44DD-80CC-1FAEBB755125}
 	EndGlobalSection
 EndGlobal
