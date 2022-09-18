@@ -12,4 +12,14 @@
     <PackageReference Include="BencodeNET" Version="4.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="torrent" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="torrent\ubuntu-22.04.1-desktop-amd64.iso.torrent">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -24,14 +24,15 @@ namespace Torrent
 {
 	public class Program
 	{
-		public const int Port = 6889;
+		private const int Port = 6889;
+		private const string TorrentFile = "torrent/ubuntu-22.04.1-desktop-amd64.iso.torrent";
 
 		public static async Task Main()
 		{
 			//parsing
 			var random = new Random();
 			var parser = new BencodeParser();
-			await using var fileStream = File.OpenRead(@"C:\Users\Lenovo\Downloads\ubuntu-22.04-desktop-amd64.iso.torrent");
+			await using var fileStream = File.OpenRead(TorrentFile);
 			var obj = await parser.ParseAsync<BDictionary>(fileStream);
 
 			var url = obj.Get<BString>("announce").ToString();
@@ -50,12 +51,12 @@ namespace Torrent
 
 			Console.Write($"Trying to connect to peer {endpoint}");
 			var s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-			s.Connect(endpoint);
+			await s.ConnectAsync(endpoint);
 			Console.WriteLine("... Done");
 
 
 			//Мужское Рукопожатие
-			var pstr = "BitTorrent protocol";
+			const string pstr = "BitTorrent protocol";
 			var bytes = Encoding.UTF8.GetBytes(pstr);
 			var array = new byte[49 + pstr.Length];
 			array[0] = 19;
@@ -73,9 +74,8 @@ namespace Torrent
 			//var buffer = new byte[1024 * 256];
 			//var result = s.Receive(buffer, SocketFlags.Truncated);
 			//Console.WriteLine(" ... Done");
-
+			//
 			//Console.WriteLine(Encoding.UTF8.GetString(buffer));
-
 		}
 
 		[StructLayout(LayoutKind.Explicit)]
@@ -88,7 +88,7 @@ namespace Torrent
 			[FieldOffset(2)] public uint be_Ip;
 		}
 
-		public static async Task<byte[]> GetPeersAsync(BencodeParser parser, string url, byte[] infoHash, string peerId, long left, long port)
+		private static async Task<byte[]> GetPeersAsync(BencodeParser parser, string url, byte[] infoHash, string peerId, long left, long port)
 		{
 			// info_hash — SHA1 - хеш словаря с информацией в торрент - файле;
 			// peer_id — уникальный ID, сгенерированный для данного клиента;
@@ -114,7 +114,7 @@ namespace Torrent
 			return MemoryMarshal.Cast<byte, PeerInfo>(bytes);
 		}
 
-		public static string GenerateId(Random random)
+		private static string GenerateId(Random random)
 		{
 			const int IdLength = 20;
 			const int VersionLength = 6;
