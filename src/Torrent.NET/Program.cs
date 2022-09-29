@@ -50,8 +50,8 @@ namespace Torrent
 			var endpoint = new IPEndPoint(address, port);
 
 			Console.Write($"Trying to connect to peer {endpoint}");
-			var s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-			await s.ConnectAsync(endpoint);
+			var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+			await socket.ConnectAsync(endpoint);
 			Console.WriteLine("... Done");
 
 
@@ -65,9 +65,18 @@ namespace Torrent
 			infoHash.CopyTo(array, 28);
 			Encoding.UTF8.GetBytes(peerId).CopyTo(array, 48);
 
+			var gg = Encoding.UTF8.GetString(array);
+			Console.WriteLine(gg);
+			
 			Console.Write("Trying send handshake");
-			s.Send(array);
+			var resultHandshake = socket.Send(array);
+			Console.WriteLine(" ... Done" + resultHandshake);
+			
+			Console.Write("Trying recieve message");
+			var buffer = new byte[1024 * 256];
+			var result = socket.Receive(buffer);
 			Console.WriteLine(" ... Done");
+			Console.WriteLine(Encoding.UTF8.GetString(buffer));
 
 
 			//Console.Write("Trying recieve message");
