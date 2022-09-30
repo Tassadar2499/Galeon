@@ -1,4 +1,5 @@
 ﻿using GaleonServer.Core.Models;
+using GaleonServer.Models.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

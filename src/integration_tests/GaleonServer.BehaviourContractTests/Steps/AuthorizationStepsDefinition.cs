@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.RegularExpressions;
 using FluentAssertions;
 using GaleonServer.BehaviourContractTests._Common;
@@ -17,8 +13,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Newtonsoft.Json;
-using TechTalk.SpecFlow;
-using Xunit;
 
 namespace GaleonServer.BehaviourContractTests.Steps;
 
@@ -89,7 +83,7 @@ public sealed class AuthorizationStepsDefinition
     }
 
     [Then(@"registration response succeed should be (.*)")]
-    public void ThenRegistrationResponseSucceedShouldBeTrue(bool result)
+    public void ThenRegistrationResponseSucceedShouldBe(bool result)
     {
         _registerResponse!.Succeed.Should().Be(result);
     }
@@ -114,7 +108,7 @@ public sealed class AuthorizationStepsDefinition
     }
 
     [Then(@"confirm email response succeed should be (.*)")]
-    public void ThenConfirmEmailResponseSucceedShouldBeTrue(bool result)
+    public void ThenConfirmEmailResponseSucceedShouldBe(bool result)
     {
         _confirmEmailResponse!.Succeed.Should().Be(result);
     }

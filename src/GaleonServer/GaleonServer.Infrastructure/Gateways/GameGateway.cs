@@ -1,6 +1,10 @@
 ﻿using GaleonServer.Core.Gateways;
 using GaleonServer.Core.Models;
 using GaleonServer.Infrastructure.Database;
+using GaleonServer.Interfaces.Gateways;
+using GaleonServer.Models.Flags;
+using GaleonServer.Models.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GaleonServer.Infrastructure.Gateways
 {
@@ -13,11 +17,24 @@ namespace GaleonServer.Infrastructure.Gateways
 			_context = context;
 		}
 
-		public async Task Add(string name, CancellationToken cancellationToken)
+		public async ValueTask<Game?> Get(int id, GameFetchOptions gameFetchOptions, CancellationToken cancellationToken)
 		{
-			var game = new Game() { Name = name };
+			IQueryable<Game> query = _context.Games;
+			
+			if (gameFetchOptions.HasFlag(GameFetchOptions.MagnetLinks))
+				query = query.Include(z => z.MagnetLinks);
+			
+			return await query.FirstOrDefaultAsync(z => z.Id == id, cancellationToken: cancellationToken);
+		}
 
-			await _context.AddAsync(game, cancellationToken);
+		public async ValueTask Create(Game game, CancellationToken cancellationToken)
+		{
+			_context.Games.Add(game);
+			await SaveChanges(cancellationToken);
+		}
+
+		public async ValueTask SaveChanges(CancellationToken cancellationToken)
+		{
 			await _context.SaveChangesAsync(cancellationToken);
 		}
 	}

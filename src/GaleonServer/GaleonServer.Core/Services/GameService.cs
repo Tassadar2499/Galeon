@@ -1,53 +1,64 @@
 using GaleonServer.Core.Gateways;
-using GaleonServer.Core.Services.Interfaces;
+using GaleonServer.Core.Helpers;
+using GaleonServer.Interfaces.Gateways;
 using GaleonServer.Models.Commands;
+using GaleonServer.Models.Flags;
+using GaleonServer.Models.Models;
 using GaleonServer.Models.Responses;
-using MediatR;
 
 namespace GaleonServer.Core.Services;
 
+public interface IGameService
+{
+    IAsyncEnumerable<GameResponse> GetAll(CancellationToken cancellationToken);
+    ValueTask<SimpleResponse> CreateOrUpdate(GameCommands.CreateOrUpdateCommand command, CancellationToken cancellationToken);
+}
+
 public class GameService : IGameService
 {
-    private readonly Lazy<IGameReadonlyGateway> _gameReadonlyGateway;
-    private readonly Lazy<IGameGateway> _gameGateway;
+    private readonly IGameGateway _gameGateway;
+    private readonly IGameReadonlyGateway _gameReadonlyGateway;
 
-    public GameService(Lazy<IGameReadonlyGateway> gameReadonlyGateway, Lazy<IGameGateway> gameGateway)
+    public GameService(IGameGateway gameGateway, IGameReadonlyGateway gameReadonlyGateway)
     {
-        _gameReadonlyGateway = gameReadonlyGateway;
         _gameGateway = gameGateway;
+        _gameReadonlyGateway = gameReadonlyGateway;
     }
 
-    public async Task<TResult> Handle<TRequest, TResult>(TRequest request, CancellationToken cancellationToken)
+    public IAsyncEnumerable<GameResponse> GetAll(CancellationToken cancellationToken)
     {
-        object response = request switch
-        {
-            AddGameCommand addGameCommand => await HandleAddGame(addGameCommand, cancellationToken),
-            _ => throw new ArgumentOutOfRangeException(nameof(request), request, null)
-        };
-
-        return (TResult)response;
+        return _gameReadonlyGateway.GetAll(cancellationToken);
     }
 
-    public IAsyncEnumerable<TResult> HandleEnumerable<TRequest, TResult>(TRequest request, CancellationToken cancellationToken)
+    public async ValueTask<SimpleResponse> CreateOrUpdate(GameCommands.CreateOrUpdateCommand command, CancellationToken cancellationToken)
     {
-        object response = request switch
-        {
-            Unit handleGetAllQuery => HandleGetAll(handleGetAllQuery, cancellationToken),
-            _ => throw new ArgumentOutOfRangeException(nameof(request), request, null)
-        };
+        Func<GameCommands.CreateOrUpdateCommand, CancellationToken, ValueTask<SimpleResponse>> action =
+            command.Id.HasValue
+                ? Update
+                : Create;
 
-        return (IAsyncEnumerable<TResult>) response;
+        return await action(command, cancellationToken);
     }
-
-    private IAsyncEnumerable<GameResponse> HandleGetAll(Unit _, CancellationToken cancellationToken)
+    
+    private async ValueTask<SimpleResponse> Create(GameCommands.CreateOrUpdateCommand command, CancellationToken cancellationToken)
     {
-        return _gameReadonlyGateway.Value.GetAll(cancellationToken);
+        var game = new Game();
+        game.InitData(command);
+
+        await _gameGateway.Create(game, cancellationToken);
+        
+        return SimpleResponse.CreateSucceed();
     }
-
-    private async Task<SimpleResponse> HandleAddGame(AddGameCommand command, CancellationToken cancellationToken)
+    
+    private async ValueTask<SimpleResponse> Update(GameCommands.CreateOrUpdateCommand command, CancellationToken cancellationToken)
     {
-        await _gameGateway.Value.Add(command.Name, cancellationToken);
+        var game = await _gameGateway.Get(command.Id!.Value, GameFetchOptions.MagnetLinks, cancellationToken)
+                   ?? throw new Exception();
+            
+        game.InitData(command);
 
+        await _gameGateway.SaveChanges(cancellationToken);
+        
         return SimpleResponse.CreateSucceed();
     }
 }

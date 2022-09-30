@@ -4,8 +4,8 @@ namespace GaleonServer.Models.Responses;
 
 public class SimpleResponse
 {
-    public bool Succeed { get; set; }
-    public string Error { get; set; }
+    public bool Succeed { get; private init; }
+    public string Error { get; init; }
 
     public static SimpleResponse CreateError(IEnumerable<string> errors)
     {

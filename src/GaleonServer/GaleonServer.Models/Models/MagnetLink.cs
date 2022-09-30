@@ -1,4 +1,6 @@
-﻿namespace GaleonServer.Core.Models
+﻿using GaleonServer.Models.Models;
+
+namespace GaleonServer.Core.Models
 {
 	public class MagnetLink : IEntityBase<int>
 	{
