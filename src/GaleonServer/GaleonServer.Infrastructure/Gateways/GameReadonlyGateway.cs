@@ -1,6 +1,7 @@
 ﻿using GaleonServer.Core.Gateways;
 using GaleonServer.Infrastructure.Database;
 using GaleonServer.Models.Responses;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace GaleonServer.Infrastructure.Gateways
@@ -17,7 +18,7 @@ namespace GaleonServer.Infrastructure.Gateways
 		public IAsyncEnumerable<GameResponse> GetAll(CancellationToken cancellationToken)
 		{
 			return _context.Games
-				.Select(x => new GameResponse() { Name = x.Name })
+				.ProjectToType<GameResponse>()
 				.AsAsyncEnumerable();
 		}
 	}
